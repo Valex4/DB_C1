@@ -31,7 +31,7 @@ PRIMARY KEY (Id)
 CREATE TABLE gases(
     id INT NOT NULL AUTO_INCREMENT,
     id_type_of_gas INT NOT NULL,
-    amount FLOAT(0.5) NOT NULL,
+    amount FLOAT(0,5) NOT NULL,
     points_per_liter INT NOT NULL,
     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     update_at  TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
@@ -64,30 +64,23 @@ CREATE TABLE type_of_gases(
     PRIMARY KEY(id)
 );
 
-create table users(
-    id int NOT NULL AUTO_INCREMENT,
-    name VARCHAR(40) NOT NULL,
-    last_name VARCHAR(40) NOT NULL,
-    email VARCHAR(30) NOT NULL UNIQUE,
-    phone VARCHAR(10) NOT NULL UNIQUE,
-    id_rol INT NOT NULL,
-    id_city INT NOT NULL,
-    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    update_at TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
-    PRIMARY KEY(id),
-    FOREIGN KEY (id_rol) REFERENCES roles(id) ON UPDATE CASCADE ON DELETE CASCADE,
-    FOREIGN KEY (id_city) REFERENCES cities(id) ON UPDATE CASCADE ON DELETE CASCADE
-);
 
 CREATE TABLE roles(
     id INT NOT NULL AUTO_INCREMENT,
     id_permissions INT NOT NULL,
-    id_user INT NOT NULL,
     PRIMARY KEY (id),
-    Foreign Key (id_permissions) REFERENCES permissions(id) on delete cascade on update cascade,
-    Foreign Key (id_user) REFERENCES users(id) on delete cascade on update cascade
+    Foreign Key (id_permissions) REFERENCES permissions(id) on delete cascade on update cascade
   );
 
+create table role_permissions (
+    id INT NOT NULL AUTO_INCREMENT,
+    id_role INT NOT NULL,
+    id_permission INT NOT NULL,
+    PRIMARY KEY(id),
+    Foreign Key (id_role) REFERENCES roles(id) on delete cascade on update cascade,
+    Foreign Key (id_permission) REFERENCES permissions(id) on delete cascade on update cascade
+
+);
 
 
 create table cities(
@@ -113,4 +106,19 @@ update_at  TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT N
 PRIMARY KEY (Id)
 Foreign Key (id_service_station) REFERENCES service_stations (id) on delete cascade on update cascade,
 Foreign Key (id_gas) REFERENCES gases(id) on delete cascade on update cascade
+);
+
+create table users(
+    id int NOT NULL AUTO_INCREMENT,
+    name VARCHAR(40) NOT NULL,
+    last_name VARCHAR(40) NOT NULL,
+    email VARCHAR(30) NOT NULL UNIQUE,
+    phone VARCHAR(10) NOT NULL UNIQUE,
+    id_role_permissions INT NOT NULL,
+    id_city INT NOT NULL,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    update_at TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
+    PRIMARY KEY(id),
+    FOREIGN KEY (id_role_permissions) REFERENCES role_permissions(id) ON UPDATE CASCADE ON DELETE CASCADE,
+    FOREIGN KEY (id_city) REFERENCES cities(id) ON UPDATE CASCADE ON DELETE CASCADE
 );
