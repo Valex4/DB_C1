@@ -68,6 +68,8 @@ CREATE TABLE type_of_gases(
 CREATE TABLE roles(
     id INT NOT NULL AUTO_INCREMENT,
     id_permissions INT NOT NULL,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    update_at  TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY (id),
     Foreign Key (id_permissions) REFERENCES permissions(id) on delete cascade on update cascade
   );
@@ -76,6 +78,8 @@ create table role_permissions (
     id INT NOT NULL AUTO_INCREMENT,
     id_role INT NOT NULL,
     id_permission INT NOT NULL,
+    create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    update_at  TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
     PRIMARY KEY(id),
     Foreign Key (id_role) REFERENCES roles(id) on delete cascade on update cascade,
     Foreign Key (id_permission) REFERENCES permissions(id) on delete cascade on update cascade
