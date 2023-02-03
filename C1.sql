@@ -31,7 +31,7 @@ PRIMARY KEY (Id)
 CREATE TABLE gases(
     id INT NOT NULL AUTO_INCREMENT,
     id_type_of_gas INT NOT NULL,
-    amount FLOAT(0,5) NOT NULL,
+    amount FLOAT(0.5) NOT NULL,
     points_per_liter INT NOT NULL,
     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     update_at  TIMESTAMP default CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL,
@@ -56,7 +56,7 @@ CREATE TABLE service_stations(
 CREATE TABLE type_of_gases(
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(20),
-    price FLOAT(0,5),
+    price FLOAT(0.5),
     octane INTEGER(5),
     stock  INT,
     create_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
