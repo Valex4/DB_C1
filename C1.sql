@@ -201,10 +201,11 @@ inner join permissions on permissions.id = role_permissions.id where users.name 
 
 select * from permissions;
 
-select users.name , permissions.name
+select users.name , permissions.name, roles.name
 from users 
 inner join role_permissions on role_permissions.id_user = users.id
-inner join permissions on permissions.id = role_permissions.id;
+inner join permissions on permissions.id = role_permissions.id_permission
+inner join roles on roles.id = users.id;
 
 
 select * from permissions;
